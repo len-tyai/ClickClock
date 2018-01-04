@@ -13,7 +13,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private final Handler mHideHandler = new Handler();
     private TextView mButton;
-    private Speaker mSpeaker;
+    private ISpeaker mSpeaker;
 
     Runnable mShowTime = new Runnable() {
         @Override
@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         mButton = findViewById(R.id.button);
         mHideHandler.postDelayed(mShowTime, 10);
-        mSpeaker = new Speaker(this);
+        mSpeaker = new RecordingSpeaker();
+        mSpeaker.init(this);
     }
 
     @Override

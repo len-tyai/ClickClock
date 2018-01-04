@@ -4,17 +4,19 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+
 import java.util.Locale;
 
 /**
- * Created by iva on 23.12.17.
+ * A speaker that uses TextToSpeech API.
  */
 
-public class Speaker implements TextToSpeech.OnInitListener {
+public class TextToSpeechSpeaker implements TextToSpeech.OnInitListener, ISpeaker {
 
     private TextToSpeech tts;
 
-    public Speaker(Context context) {
+    @Override
+    public void init(Context context){
         tts = new TextToSpeech(context, this);
     }
 
@@ -24,6 +26,7 @@ public class Speaker implements TextToSpeech.OnInitListener {
         tts.setLanguage(dLocale);
     }
 
+    @Override
     public void speak(String text) {
         System.out.println("Speak " + text);
         Bundle bundle = new Bundle();
@@ -33,10 +36,7 @@ public class Speaker implements TextToSpeech.OnInitListener {
         tts.speak(text, TextToSpeech.QUEUE_ADD, bundle, "a");
     }
 
-    public void pause(int duration) {
-        tts.playSilence(duration, TextToSpeech.QUEUE_ADD, null);
-    }
-
+    @Override
     public void destroy() {
         tts.shutdown();
     }
